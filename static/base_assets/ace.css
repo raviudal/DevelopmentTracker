@@ -4652,9 +4652,9 @@ body.mob-safari .sidebar.sidebar-fixed {
  line-height:1.38
 }
 .btn-group-xs>.btn,.btn-xs {
- padding-top:3px;
- padding-bottom:3px;
- border-width:3px
+ <!--padding-top:3px;-->
+ <!--padding-bottom:3px;-->
+ <!--border-width:3px-->
 }
 .btn-group-mini>.btn,.btn-mini {
  padding:1px 5px;
@@ -14796,7 +14796,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
  text-align:center;
  position:static;
  float:none;
- margin:0 2px!important;
+ margin:0 1px!important;
  color:grey;
  border:1px solid #CCC;
  background-color:#FFF;
@@ -16962,6 +16962,37 @@ input.typeahead.scrollable~.tt-menu {
 .onpage-help-modal .modal-body {
  font-size:14px
 }
+.label-closed {
+background-color:#43c40b
+}
+.label-open {
+background-color:#727571
+}
+.label-hold {
+background-color:#f7cc31
+}
+.label-drop {
+background-color:#d17968
+}
+.label-ue {
+background-color:#9aaeed
+}
+.label-uae {
+background-color:#bfc0c1
+}
+.label-utt {
+background-color:#519166
+}
+.label-uft {
+background-color:#76f774
+}
+.label-uct {
+background-color:#76f774
+}
+.label-wip {
+background-color:#43c40b
+}
+
 @media print {
  .main-content .nav-search,.navbar,.sidebar {
   display:none!important
