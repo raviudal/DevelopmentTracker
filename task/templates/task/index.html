@@ -1,6 +1,68 @@
 {% extends "task/base.html" %}
 
-{% block content %}
-<h1>Local Library Home</h1>
-<p>Welcome to <em>LocalLibrary</em>, a very basic Django website developed as a tutorial example on the Mozilla Developer Network.</p>
+{% block pageHeader %}
+	<h1>
+		Dashboard
+		<small>
+			<i class="ace-icon fa fa-angle-double-right"></i>
+			overview &amp; stats
+		</small>
+	</h1>
 {% endblock %}
+{% block content %}
+
+<h5>Top 20 high priority Tasks of the last month which are not closed:</h5>
+
+ <table id="simple-table" class="table  table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Name</th> <!--coll-no-1-->
+            <th>CRN NO</th> <!--coll-no-2-->
+            <th>Planed Start Date</th> <!--coll-no-3-->
+            <th>Status</th> <!--coll-no-4-->
+        </tr>
+        </thead>
+        <tbody>
+        {% for task in not_closed_task %}
+        <tr>
+            <td>{{task.name}}</td><!--coll-no-1-->
+            <td>{{task.crnNumber}}</td><!--coll-no-2-->
+            <td>{{task.plannedStartDate}}</td><!--coll-no-3-->
+            <td class="hidden-480"><!--coll-no-4-->
+                <span class="
+                {%if task.status.pk == " OPN" %}label label-sm label-open {% endif %}
+                {%if task.status.pk == "CLS" %}label label-sm label-closed {% endif %}
+                {%if task.status.pk == "HLD" %}label label-sm label-hold {% endif %}
+                {%if task.status.pk == "DRP" %}label label-sm label-drop {% endif %}
+                {%if task.status.pk == "UE" %}label label-sm label-ue {% endif %}
+                {%if task.status.pk == "UAE" %}label label-sm label-uae {% endif %}
+                {%if task.status.pk == "UTT" %}label label-sm label-utt {% endif %}
+                {%if task.status.pk == "UFT" %}label label-sm label-uft {% endif %}
+                {%if task.status.pk == "UCT" %}label label-sm label-uct {% endif %}
+                {%if task.status.pk == "WIP" %}label label-sm label-wip {% endif %}
+
+
+                ">{{task.status}} </span>
+            </td>
+        {% endfor %}
+
+
+        </tbody>
+    </table>
+
+
+
+<hr>
+
+
+<h4>Summery of all the projects</h4>
+<ul class="list-unstyled">
+{% for a in projects_stats_list%}
+	<li><i class="ace-icon fa glyphicon-plus"></i> <b>{{a}}</b> </li>
+{% endfor %}
+</ul>
+
+
+{% endblock %}
+
+

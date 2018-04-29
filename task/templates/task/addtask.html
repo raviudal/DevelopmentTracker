@@ -1,0 +1,273 @@
+{% extends "task/base.html" %}
+
+{% block title%}
+Add / Edit Task
+{% endblock%}
+
+{% block pageHeader %}
+	<h1>
+		Add / Edit Task
+	</h1>
+{% endblock %}
+{% block content %}
+
+{% if messages %}
+
+    {% for message in messages %}
+<h2>{{ message }}</h2>
+    {% endfor %}
+
+{% else %}
+
+
+
+<form action="" method="post">
+    {% csrf_token %}
+
+    <div class=" col-xs-2" hidden>
+    <label for="id_code">Code:</label> </div>
+    <div class="col-xs-10" style="margin-bottom:5px" hidden>
+    <input type="text" name="code" value="{% if form.code.value != None %} {{form.code.value}} {% endif %}" maxlength="100" required id="id_code" />
+    </div>
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_product">Product:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px" >
+       <select class="form-control" style="width:350px" selected="{% if form.product.value != None %} {{form.product.value}} {% endif %}"name="product" required="" id="id_product">
+
+            {% for x,y in form.fields.product.choices %}
+            <option value="{{x}}" {% if form.product.value == x %}selected="" {% endif %}>{{y}}</option>
+            {% endfor %}
+
+        </select>
+    </div>
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_project">Project:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <select class="form-control" style="width:350px" name="project" required="" id="id_project">
+            {% for x,y in form.fields.project.choices %}
+            <option value="{{x}}" {% if form.project.value == x %}selected="" {% endif %}>{{y}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_name">Name:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <input class="form-control" style="width:350px" value="{% if form.name.value != None %} {{form.name.value}} {% endif %}"name="name" maxlength="500" id="id_name" type="text">
+    </div>
+
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_crnNumber">crnNumber:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <input class="form-control" style="width:350px" value="{% if form.crnNumber.value != None %} {{form.crnNumber.value}} {% endif %}"name="crnNumber" maxlength="100" id="id_crnNumber" type="text">
+    </div>
+
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_version">Version:</label>
+    </div>
+    <div class="col-xs-10" >
+        <input class="form-control" style="width:350px" value="{% if form.version.value != None %} {{form.version.value}} {% endif %}" name="version" maxlength="5" id="id_version" type="text"></p>
+    </div>
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_taskType">TaskType:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <select class="form-control" style="width:350px"  name="taskType" id="id_taskType">
+            <option value="DEV" {% if form.taskType.value == "DEV" %}selected="" {% endif %}>Development</option>
+
+            <option value="ISS"  {% if form.taskType.value == "ISS" %}selected="" {% endif %}>Issue.</option>
+
+            <option value="REP"  {% if form.taskType.value == "REP" %}selected="" {% endif %}>Report</option>
+
+        </select>
+    </div>
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_reportedBy">ReportedBy:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <select class="form-control" style="width:350px" name="reportedBy" required="" id="id_reportedBy">
+            {% for x,y in form.fields.reportedBy.choices %}
+            <option value="{{x}}" {% if form.reportedBy.value == x %}selected="" {% endif %}>{{y}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_reportedOn">ReportedOn:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <div class="input-group" style="width:350px">
+            <input class="form-control date-picker  col-sm-5" value="{% if form.reportedOn.value != None %} {{form.reportedOn.value|date:"o-m-d"}} {% endif %}" name="reportedOn" id="id_reportedOn"
+                   data-date-format="yyyy-mm-dd" type="text">
+            <span class="input-group-addon">
+		<i class="fa fa-calendar bigger-110"></i>
+	</span>
+        </div>
+    </div>
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_plannedStartDate">PlannedStartDate:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <div class="input-group" style="width:350px">
+            <input class="form-control date-picker  col-sm-5" value="{% if form.plannedStartDate.value != None %} {{form.plannedStartDate.value|date:"o-m-d"}} {% endif %}" name="plannedStartDate"
+                   id="id_plannedStartDate" data-date-format="yyyy-mm-dd" type="text">
+            <span class="input-group-addon">
+		<i class="fa fa-calendar bigger-110"></i>
+	</span>
+        </div>
+    </div>
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_plannedEndDate">PlannedEndDate:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <div class="input-group" style="width:350px">
+            <input class="form-control date-picker  col-sm-5" value="{% if form.plannedEndDate.value != None %} {{form.plannedEndDate.value|date:"o-m-d"}} {% endif %}" name="plannedEndDate"
+                   id="id_plannedEndDate" data-date-format="yyyy-mm-dd" type="text">
+            <span class="input-group-addon">
+		<i class="fa fa-calendar bigger-110"></i>
+	</span>
+        </div>
+    </div>
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_revisedStartDate">RevisedStartDate:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <div class="input-group" style="width:350px">
+            <input class="form-control date-picker  col-sm-5" value="{% if form.revisedStartDate.value != None %} {{form.revisedStartDate.value|date:"o-m-d"}} {% endif %}" name="revisedStartDate" id="id_revisedStartDate"
+                   data-date-format="yyyy-mm-dd" id="id_revisedStartDate" type="text">
+            <span class="input-group-addon">
+		<i class="fa fa-calendar bigger-110"></i>
+	</span>
+        </div>
+    </div>
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_revisedEndDate">RevisedEndDate:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <div class="input-group" style="width:350px">
+            <input class="form-control date-picker  col-sm-5" value="{% if form.revisedEndDate.value != None %} {{form.revisedEndDate.value|date:"o-m-d"}} {% endif %}" name="revisedEndDate" id="id_revisedEndDate"
+                   data-date-format="yyyy-mm-dd" type="text">
+            <span class="input-group-addon">
+		<i class="fa fa-calendar bigger-110"></i>
+	</span>
+        </div>
+    </div>
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_estimatedHours">EstimatedHours:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <div class="input-group" style="width:350px">
+            <input class="form-control col-sm-5" name="estimatedHours" value="{% if form.estimatedHours.value != None %} {{form.estimatedHours.value}} {% endif %}" id="id_estimatedHours"
+                   >
+        </div>
+    </div>
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_priority">Priority:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <select name="priority" id="id_priority" style="width:350px">
+            <option value="HIGH"  {% if form.taskType.value == "HIGH" %}selected="" {% endif %}>High</option>
+            <option value="LOW"  {% if form.taskType.value == "LOW" %}selected="" {% endif %}>Low</option>
+            <option value="TRI"  {% if form.taskType.value == "TRI" %}selected="" {% endif %}>Trivial</option>
+        </select>
+    </div>
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_actualStartDate">ActualStartDate:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <div class="input-group" style="width:350px">
+            <input class="form-control date-picker  col-sm-5"value="{% if form.actualStartDate.value != None %} {{form.actualStartDate.value|date:"o-m-d"}} {% endif %}" name="actualStartDate" id="id_actualStartDate"
+                   data-date-format="yyyy-mm-dd" type="text">
+            <span class="input-group-addon">
+		<i class="fa fa-calendar bigger-110"></i>
+	</span>
+        </div>
+    </div>
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_actualEndDate">ActualEndDate:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <div class="input-group" style="width:350px">
+            <input class="form-control date-picker  col-sm-5" value="{% if form.actualEndDate.value != None %} {{form.actualEndDate.value|date:"o-m-d"}} {% endif %}" name="actualEndDate"
+                   data-date-format="yyyy-mm-dd" id="id_actualEndDate" type="text">
+            <span class="input-group-addon">
+		<i class="fa fa-calendar bigger-110"></i>
+	</span>
+        </div>
+    </div>
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_status">Status:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <select class="form-control" style="width:350px " name="status" required="" id="id_status">
+            {% for x,y in form.fields.status.choices %}
+            <option value="{{x}}" {% if form.status.value == x %}selected="" {% endif %}>{{y}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_releasedDate">ReleasedDate:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <div class="input-group" style="width:350px">
+            <input class="form-control date-picker  col-sm-5" data-date-format="yyyy-mm-dd" value="{% if form.releasedDate.value != None %} {{form.releasedDate.value|date:"o-m-d"}} {% endif %}" name="releasedDate"
+                   id="id_releasedDate" type="text">
+            <span class="input-group-addon">
+		<i class="fa fa-calendar bigger-110"></i>
+	</span>
+        </div>
+    </div>
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_releaseNote">ReleaseNote:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <div class="input-group" style="width:350px">
+            <textarea name="releaseNote" cols="40" rows="10" id="id_releaseNote" >{% if form.releaseNote.value != None %} {{form.releaseNote.value}} {% endif %}</textarea>
+        </div>
+    </div>
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_comment">Comment:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <div class="input-group" style="width:350px">
+            <textarea name="comment" cols="40" rows="10" id="id_comment">{% if form.comment.value != None %} {{form.comment.value}} {% endif %}</textarea>
+        </div>
+    </div>
+
+
+    <div class=" col-xs-3">
+    </div>
+    <input class="btn btn-info ace-icon col-xs-9 " type="submit" value="Add Task" style="font-size: 15px; width:150px"/>
+
+</form>
+
+<!--{{form}}-->
+
+{% endif %}
+
+
+
+{% endblock %}
+
+

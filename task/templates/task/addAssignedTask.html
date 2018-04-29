@@ -1,0 +1,156 @@
+{% extends "task/base.html" %}
+{% block title%}
+		Allocate Task
+{% endblock %}
+{% block pageHeader %}
+	<h1>3
+		Allocate Task
+	</h1>
+{% endblock %}
+{% block content %}
+
+<form action="" method="post">
+    {% csrf_token %}
+
+ <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_code">Code:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <select class="form-control" style="width:350px" name="code" required="" id="id_code">
+            {% for x,y in form.fields.code.choices %}
+            <option value="{{x}}">{{y}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+ <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_assignedBy">AssignedBy:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <select class="form-control" style="width:350px" name="assignedBy" required="" id="id_assignedBy">
+            {% for x,y in form.fields.assignedBy.choices %}
+            <option value="{{x}}">{{y}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+ <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_assignedTo">AssignedTo:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <select class="form-control" style="width:350px" name="assignedTo" required="" id="id_assignedTo">
+            {% for x,y in form.fields.assignedTo.choices %}
+            <option value="{{x}}">{{y}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+ <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_assignedOn">AssignedOn:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <div class="input-group" style="width:350px">
+            <input class="form-control date-picker  col-sm-5" name="assignedOn" value="" id="id_assignedOn"
+                   data-date-format="yyyy-mm-dd" type="text">
+            <span class="input-group-addon">
+		<i class="fa fa-calendar bigger-110"></i>
+	</span>
+        </div>
+    </div>
+
+ <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_startedOn">StartedOn:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <div class="input-group" style="width:350px">
+            <input class="form-control date-picker  col-sm-5" name="startedOn" value="" id="id_startedOn"
+                   data-date-format="yyyy-mm-dd" type="text">
+            <span class="input-group-addon">
+		<i class="fa fa-calendar bigger-110"></i>
+	</span>
+        </div>
+    </div>
+
+<div class=" col-xs-2">
+        <label class="col-sm-3" for="id_finisedOn">FinisedOn:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <div class="input-group" style="width:350px">
+            <input class="form-control date-picker  col-sm-5" name="finisedOn" value="" id="id_finisedOn"
+                   data-date-format="yyyy-mm-dd" type="text">
+            <span class="input-group-addon">
+		<i class="fa fa-calendar bigger-110"></i>
+	</span>
+        </div>
+    </div>
+
+<div class=" col-xs-2">
+        <label class="col-sm-3" for="id_estimatedFinishDate">EstimatedFinishDate:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <div class="input-group" style="width:350px">
+            <input class="form-control date-picker  col-sm-5" name="estimatedFinishDate" value="" id="id_estimatedFinishDate"
+                   data-date-format="yyyy-mm-dd" type="text">
+            <span class="input-group-addon">
+		<i class="fa fa-calendar bigger-110"></i>
+	</span>
+        </div>
+    </div>
+
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_comment">Comment:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <div class="input-group" style="width:350px">
+            <textarea name="comment" cols="40" rows="10" id="id_comment"></textarea>
+        </div>
+    </div>
+
+    <div class=" col-xs-3">
+    </div>
+    <input class="btn btn-info ace-icon col-xs-9 " type="submit" value="Add Task" style="font-size: 15px; width:150px"/>
+
+</form>
+
+<!--<form action="" method="post">-->
+    <!--{% csrf_token %}-->
+    <!--{{form}}-->
+        <!--<div class=" col-xs-3">-->
+    <!--</div>-->
+    <!--<input class="btn btn-info ace-icon col-xs-9 " type="submit" value="Add Task" style="font-size: 15px; width:150px"/>-->
+
+<!--</form>-->
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
