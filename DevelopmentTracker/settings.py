@@ -55,7 +55,7 @@ ROOT_URLCONF = 'DevelopmentTracker.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['./task/templates'],
+        'DIRS': ['./task/templates','./templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -120,6 +120,9 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
+# Uploaded Files handeling
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Newly added lines for proper fuctioning of static files
 # Remember to include at the top of the html template => {% load static %}
 STATICFILES_DIRS = (

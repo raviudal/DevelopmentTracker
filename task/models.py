@@ -18,6 +18,20 @@ TASK_PRIORITY = (
     ('TRI', 'Trivial'),
 )
 
+APPLICATION_CHOICES = (
+    ('QA', 'QA'),
+    ('DEV', 'Development'),
+    ('PROD', 'Production'),
+)
+
+VPN_CHOICES = (
+    ('VPN', 'VPN'),
+    ('Forticlient', 'Forticlient'),
+    ('Sonicwall', 'Sonicwall'),
+    ('Juniper', 'Juniper'),
+    ('Windows', 'Windows')
+)
+
 # Models Definations here.
 class product(models.Model):
     code = models.CharField(max_length=10, primary_key=True)
@@ -45,22 +59,23 @@ class taskStatus(models.Model):
 class task(models.Model):
     
     code = models.CharField(max_length=100, primary_key=True)
-    name =    models.CharField(max_length=500, null=True, blank=True)
+    name = models.CharField(max_length=500, null=True, blank=True)
     product = models.ForeignKey('product', on_delete=models.SET_NULL, null=True)
     project = models.ForeignKey('project', on_delete=models.SET_NULL, null=True)
     version = models.CharField(max_length=5, null=True, blank=True)
-    taskType = models.CharField(max_length=5, choices=TASKTYPE_CHOICES, default='DEV')
+    taskType = models.CharField(max_length=5, choices=TASKTYPE_CHOICES, default='DEV', null=True, blank=True)
     comment = models.TextField(null=True, blank=True)
     crnNumber = models.CharField(max_length=100, null=True, blank=True)
     #attachedCRN = uploaded crn link
+    #file = models.FileField(upload_to='docs/',null=True, blank=True)
     reportedBy = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     reportedOn = models.DateField(null=True, blank=True)
     plannedStartDate = models.DateField(null=True, blank=True)
     plannedEndDate = models.DateField(null=True, blank=True)
     revisedStartDate = models.DateField(null=True, blank=True)
     revisedEndDate = models.DateField(null=True, blank=True)
-    estimatedHours = models.IntegerField(max_length=3, default=0)
-    priority = models.CharField(max_length=5, choices=TASK_PRIORITY, default='LOW')
+    estimatedHours = models.CharField(max_length=5, default=0, null=True, blank=True)
+    priority = models.CharField(max_length=5, choices=TASK_PRIORITY, default='LOW', null=True, blank=True)
     actualStartDate = models.DateField(null=True, blank=True)
     actualEndDate = models.DateField(null=True, blank=True)
     status = models.ForeignKey('taskStatus', on_delete=models.SET_NULL, null=True)
@@ -83,12 +98,6 @@ class task(models.Model):
         return reverse('task', args=[str(self.code)])
 
 
-    def return_top_10_high_works(self):
-        today_date = datetime.today()
-        one_month_ago = today_date - relativedelta(months=1)
-        return task.objects.filter(plannedStartDate__gte = one_month_ago )[20]
-
-
     class Meta:
         ordering = ['priority', 'addedOn']
 
@@ -100,4 +109,36 @@ class taskAllocate(models.Model):
     startedOn = models.DateField(null=True, blank=True)
     finisedOn = models.DateField(null=True, blank=True)
     estimatedFinishDate = models.DateField(null=True, blank=True)
+    status = models.ForeignKey('taskStatus', on_delete=models.SET_NULL, null=True)
+    comment = models.TextField(null=True, blank=True)
+
+    def return_abs_url(self):
+        return reverse('assignedTask', args=[str(self.id)])
+
+
+    class Meta:
+        ordering = ['-id']
+
+class upload(models.Model):
+    name = models.CharField(max_length=20)
+    file = models.FileField(upload_to='docs/')
+
+
+class connectionDetails(models.Model):
+    projectCode = models.ForeignKey('task', on_delete=models.SET_NULL, null=True)    # - - DTGD[PRJ]
+    application = models.CharField(max_length=15, choices=VPN_CHOICES)     # - - DTGD[APP - - QA / DEV / PRD]
+    ip = models.CharField(max_length=15,null=True, blank=True)               # -  - VARCHAR[15]
+    port = models.CharField(max_length=4,null=True, blank=True)             # - - VARCHAR[4]
+    userId = models.CharField(max_length=50,null=True, blank=True)           # - - VARCHAR[check
+    password = models.CharField(max_length=50,null=True, blank=True)         # - - VARCHAR[check
+    vpnApp = models.CharField(max_length=15, choices=APPLICATION_CHOICES)            # - - DTG[VPN - Forticlient, Sonicwall, Juniper, Windows
+    vpnIp = models.CharField(max_length=15,null=True, blank=True)            # - - VARCHAR[15]
+    vpnPort = models.CharField(max_length=6,null=True, blank=True)          # - - VARCHAR[6]
+    vpnUserId = models.CharField(max_length=50,null=True, blank=True)        # - - VARCHAR(50)
+    vpnPassword = models.CharField(max_length=50,null=True, blank=True)      # - - VARCHAR(50)
+    rdpIP = models.CharField(max_length=15,null=True, blank=True)            # - - VARCHAR(15)
+    rdpUserId1 = models.CharField(max_length=50,null=True, blank=True)       # - - VARCHAR(50)[Total
+    rdpPassword1 = models.CharField(max_length=50,null=True, blank=True)     # - - VARCHAR(50)
+    workspace = models.CharField(max_length=250,null=True, blank=True)        # - - VARCHAR(250)[Workspace
+    software = models.FileField(upload_to='docs/')
     comment = models.TextField(null=True, blank=True)

@@ -80,14 +80,16 @@
 
 
 
-
+{% if user.is_authenticated %}
 
 						<li class="light-blue dropdown-modal">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle" aria-expanded="false">
 								<img class="nav-user-photo" alt="Jason's Photo" src="{% static 'base_assets/avatar2.png' %}">
 								<span class="user-info">
 									<small>Welcome,</small>
-									User Name
+
+									<b>{{user}}</b>
+
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -99,13 +101,14 @@
 							<!--	<li class="divider"></li> -->
 
 								<li>
-									<a href="#">
+									<a href="/accounts/logout">
 										<i class="ace-icon fa fa-power-off"></i>
 										Logout
 									</a>
 								</li>
 							</ul>
 						</li>
+{% endif %}
 					</ul>
 				</div>
 			</div>
@@ -136,9 +139,13 @@
 					</div>
 				</div>
 				<!-- /.sidebar-shortcuts -->
-				{% url 'index' as url %}
+{% if user.is_authenticated %}
 
+				{% url 'index' as url %}
 				<ul class="nav nav-list" style="top: 0px;">
+
+		{% for group in user.groups.all %}
+		{% if group.name == 'Manager' %}
 					<li {% if request.path == url %} class="active" {% endif %} >
 						<a href="{% url 'index' %} ">
 							<i class="menu-icon fa fa-tachometer"></i>
@@ -153,7 +160,7 @@
 
 
 
-{% url 'task' as url %}
+					{% url 'task' as url %}
 					<li {% if request.path == url %} class="active" {% endif %}>
 						<a href="{% url 'task' %}">
 							<i class="menu-icon fa fa-list-alt"></i>
@@ -162,9 +169,10 @@
 
 						<b class="arrow"></b>
 					</li>
+		{% endif %}
+		{% endfor %}
 
-
-{% url 'assignedTask' as url %}
+					{% url 'assignedTask' as url %}
 					<li {% if request.path == url %} class="active" {% endif %}>
 						<a href="{% url 'assignedTask' %}">
 							<i class="menu-icon fa fa-tag"></i>
@@ -174,16 +182,17 @@
 						<b class="arrow"></b>
 					</li>
 
-{% url 'connectionDetails' as url %}
+					{% url 'connectionDetails' as url %}
 					<li {% if request.path == url %} class="active" {% endif %}>
 						<a href="{% url 'connectionDetails' %}">
 							<i class="menu-icon fa fa-list"></i>
-							<span class="menu-text">Connection Details</span>
+							<span class="menu-text">Connections</span>
 						</a>
 
 						<b class="arrow"></b>
 					</li>
-
+		{% for group in user.groups.all %}
+		{% if group.name == 'Manager' %}
 					<li class="">
 						<a href="admin">
 							<i aria-hidden="true" class="menu-icon fa fa-windows"></i>
@@ -192,11 +201,14 @@
 
 						<b class="arrow"></b>
 					</li>
-
+		{% endif %}
+		{% endfor %}
 
 
 
 				</ul>
+
+				{% endif %}
 				<!-- /.nav-list -->
 
 
@@ -204,23 +216,27 @@
 
 			<div class="main-content">
 				<div class="main-content-inner">
+
+		{% if user.is_authenticated %}
 					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
 						<ul class="breadcrumb">
 							<li>
 								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="#">Home</a>
+								<a href="/">Home</a>
 							</li>
-							<li class="active">Dashboard</li>
+							<li class="active">
+					{% block navTitle %}Dashboard{% endblock %}
+							</li>
 						</ul><!-- /.breadcrumb -->
-
-						<div class="nav-search" id="nav-search">
-							<form class="form-search">
-								<span class="input-icon">
-									<input placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" type="text">
-									<i class="ace-icon fa fa-search nav-search-icon"></i>
-								</span>
-							</form>
-						</div><!-- /.nav-search -->
+		{% endif%}
+						<!--<div class="nav-search" id="nav-search">-->
+							<!--<form class="form-search">-->
+								<!--<span class="input-icon">-->
+									<!--<input placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" type="text">-->
+									<!--<i class="ace-icon fa fa-search nav-search-icon"></i>-->
+								<!--</span>-->
+							<!--</form>-->
+						<!--</div>&lt;!&ndash; /.nav-search &ndash;&gt;-->
 					</div>
 
 					<div class="page-content">

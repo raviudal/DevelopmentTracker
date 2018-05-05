@@ -10,8 +10,13 @@
 	</h1>
 {% endblock %}
 {% block content %}
+{% for group in user.groups.all %}
+    {% if group.name == 'Manager' %}
+        user is of manger group
+    {% endif %}
+{% endfor %}
 
-<h5>Top 20 high priority Tasks of the last month which are not closed:</h5>
+<h5>Top 20 high priority Tasks of the last month which are not closed:  {{ user.groups.all.0 }}</h5>
 
  <table id="simple-table" class="table  table-bordered table-hover">
         <thead>

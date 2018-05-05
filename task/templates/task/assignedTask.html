@@ -8,5 +8,115 @@
 	</h1>
 {% endblock %}
 {% block content %}
+
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info">
+    <button class="close" data-dismiss="alert">
+        <i class="ace-icon fa fa-times"></i>
+    </button>
+    <i class="ace-icon fa fa-check"></i>  {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+
+
+
+<div style="float:right">
+    <div class="btn btn-white btn-sm btn-primary"><i class="ace-icon fa glyphicon-plus"></i><a href="{%url 'addAssignedTask'%}">Assign New Task</a> </div>
+</div>
+<div>
+
+
+
+<div>
+
+    {% if is_paginated %}
+    <div class="btn-group">
+        {% if page_obj.has_previous %}
+        <div class="btn btn-white btn-sm btn-primary"><i class="ace-icon fa fa-arrow-left "></i><a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous</a> </div>
+        {% endif %}
+        <div class="btn btn-white btn-sm btn-primary">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</div>
+        {% if page_obj.has_next %}
+        <div class="btn btn-white btn-sm btn-primary"><a href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a> <i class="ace-icon fa fa-arrow-right "></i> </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+
+</div>
+<div>
+
+    <table id="simple-table" class="table  table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Code</th> <!--coll-no-1-->
+            <th>AssignedBy</th> <!--coll-no-2-->
+            <th>AssignedTo</th> <!--coll-no-3-->
+            <th>AssignedOn</th> <!--coll-no-4-->
+            <th>StartedOn</th> <!--coll-no-5-->
+            <th>FinisedOn</th> <!--coll-no-6-->
+			<th>EstimatedFinishDate</th> <!--coll-no-7-->
+            <th>Status</th> <!--coll-no-8-->
+
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for taskAllocate in taskAllocate_list %}
+
+        <tr>
+            <td>{{taskAllocate.code}}</td><!--coll-no-1-->
+            <td>{{taskAllocate.assignedBy}}</td><!--coll-no-2-->
+            <td>{{taskAllocate.assignedTo}}</td><!--coll-no-3-->
+            <td>{{taskAllocate.assignedOn}}</td><!--coll-no-4-->
+            <td>{{taskAllocate.startedOn}}</td><!--coll-no-5-->
+            <td>{{taskAllocate.finisedOn}}</td><!--coll-no-6-->
+			<td>{{taskAllocate.estimatedFinishDate}}</td><!--coll-no-7-->
+            <td class="hidden-480"><!--coll-no-8-->
+                <span class="
+                {%if taskAllocate.status.pk == "OPN" %}label label-sm label-open {% endif %}
+                {%if taskAllocate.status.pk == "CLS" %}label label-sm label-closed {% endif %}
+                {%if taskAllocate.status.pk == "HLD" %}label label-sm label-hold {% endif %}
+                {%if taskAllocate.status.pk == "DRP" %}label label-sm label-drop {% endif %}
+                {%if taskAllocate.status.pk == "UE" %}label label-sm label-ue {% endif %}
+                {%if taskAllocate.status.pk == "UAE" %}label label-sm label-uae {% endif %}
+                {%if taskAllocate.status.pk == "UTT" %}label label-sm label-utt {% endif %}
+                {%if taskAllocate.status.pk == "UFT" %}label label-sm label-uft {% endif %}
+                {%if taskAllocate.status.pk == "UCT" %}label label-sm label-uct {% endif %}
+                {%if taskAllocate.status.pk == "WIP" %}label label-sm label-wip {% endif %}
+
+
+                ">{{taskAllocate.status}} </span>
+            </td>
+
+
+            <td><!--coll-no-8-->
+                <a href="{{taskAllocate.return_abs_url}}">
+                    <div class="hidden-sm hidden-xs btn-group">
+
+                        <button class="btn btn-xs btn-info">
+                            <i class="ace-icon fa fa-pencil bigger-120"></i>
+                        </button>
+
+
+                    </div>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+
+
+        </tbody>
+    </table>
+
+</div>
+
+
+
+
+
+
 {% endblock %}
 

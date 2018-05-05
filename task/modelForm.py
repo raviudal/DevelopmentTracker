@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import task, taskAllocate
+from .models import task, taskAllocate, upload
 
 class addTask(forms.ModelForm):
 
@@ -15,3 +15,9 @@ class addAllocateTask(forms.ModelForm):
     class Meta:
         model = taskAllocate
         fields = '__all__'
+
+
+class UploadForm(forms.ModelForm):
+    class Meta:
+        model = upload
+        fields = ('name', 'file', )
