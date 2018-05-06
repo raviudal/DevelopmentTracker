@@ -1,0 +1,137 @@
+{% extends "task/base.html" %}
+{% block title%}
+Connection Details
+{% endblock %}
+{% block pageHeader %}
+<h1>
+    Connection Details -Add
+</h1>
+{% endblock %}
+{% block navTitle %}
+Connection Detail - Add
+{% endblock %}
+{% block content %}
+
+<form action="" method="POST">
+    {%csrf_token%}
+
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_projectCode">ProjectCode:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <select style="width:350px" name="projectCode" required id="id_projectCode">
+
+            {% for x,y in form.fields.projectCode.choices %}
+            <option value="{{x}}" {% if form.projectCode.value == x %} selected {% endif %}>{{y}}</option>
+            {% endfor %}
+
+        </select>
+    </div>
+
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_application">Application:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <select style="width:350px" name="application" id="id_application">
+
+            <option value="QA"{% if form.application.value == "QA" %} selected {% endif %}>QA</option>
+
+            <option value="DEV"{% if form.application.value == "DEV" %} selected {% endif %}>Development</option>
+
+            <option value="PROD"{% if form.application.value == "PROD" %} selected {% endif %}>Production</option>
+
+        </select>
+    </div>
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_ip">Ip:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+
+        <input value="{% if form.ip.value != None %} {{form.ip.value}} {% endif %}" style="width:350px" type="text" name="ip" maxlength="15" id="id_ip"/>
+    </div>
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_port">Port:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <input value="{% if form.port.value != None %} {{form.port.value}} {% endif %}" style="width:350px" type="text" name="port" maxlength="4" id="id_port"/>
+    </div>
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_userIdAndPassword">User Id And Password:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <textarea style="width:350px" name="userIdAndPassword" cols="40" rows="10" maxlength="50"
+                  id="id_userIdAndPassword">{% if form.userIdAndPassword.value != None %} {{form.userIdAndPassword.value}} {% endif %}</textarea>
+    </div>
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_vpnApp">VpnApp:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <select style="width:350px" name="vpnApp" id="id_vpnApp">
+
+            <option value="VPN"{% if form.vpnApp.value == "VPN" %} selected {% endif %}>VPN</option>
+
+            <option value="Forticlient"{% if form.vpnApp.value == "Forticlient" %} selected {% endif %}>Forticlient</option>
+
+            <option value="Sonicwall"{% if form.vpnApp.value == "Sonicwall" %} selected {% endif %}>Sonicwall</option>
+
+            <option value="Juniper"{% if form.vpnApp.value == "Juniper" %} selected {% endif %}>Juniper</option>
+
+            <option value="Windows"{% if form.vpnApp.value == "Windows" %} selected {% endif %}>Windows</option>
+
+        </select>
+    </div>
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_vpnIp">VpnIp:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <input value="{% if form.vpnIp.value != None %} {{form.vpnIp.value}} {% endif %}" style="width:350px" type="text" name="vpnIp" maxlength="15" id="id_vpnIp"/>
+    </div>
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_vpnPort">VpnPort:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <input value="{% if form.vpnPort.value != None %} {{form.vpnPort.value}} {% endif %}" style="width:350px" type="text" name="vpnPort" maxlength="6" id="id_vpnPort"/>
+    </div>
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_vpnUserIdPassword">Vpn User Id Password:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <textarea style="width:350px" name="vpnUserIdPassword" cols="40" rows="10" maxlength="500"
+                  id="id_vpnUserIdPassword">{% if form.vpnUserIdPassword.value != None %} {{form.vpnUserIdPassword.value}} {% endif %}</textarea>
+    </div>
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_rdpIP">RdpIP:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <input value="{% if form.rdpIP.value != None %} {{form.rdpIP.value}} {% endif %}" style="width:350px" type="text" name="rdpIP" maxlength="15" id="id_rdpIP"/>
+    </div>
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_rdpUserIdAndPassword">RdpUserIdAndPassword:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <textarea style="width:350px" name="rdpUserIdAndPassword" cols="40" rows="10" maxlength="50"
+                  id="id_rdpUserIdAndPassword">{% if form.rdpUserIdAndPassword.value != None %} {{form.rdpUserIdAndPassword.value}} {% endif %}</textarea>
+    </div>
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_workspace">Workspace:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <input value="{% if form.workspace.value != None %} {{form.workspace.value}} {% endif %}" style="width:350px" type="text" name="workspace" maxlength="250" id="id_workspace"/>
+    </div>
+    <div class=" col-xs-2">
+        <label class="col-sm-3" for="id_comment">Comment:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <textarea style="width:350px" name="comment" cols="40" rows="10" maxlength="200" id="id_comment">{% if form.comment.value != None %} {{form.comment.value}} {% endif %}</textarea>
+    </div>
+
+
+    <div class=" col-xs-3">
+    </div>
+    <input class="btn btn-info ace-icon col-xs-9 " type="submit" value="Add Connection Detail" style="font-size: 15px; width:150px"/>
+
+</form>
+
+{% endblock %}
+

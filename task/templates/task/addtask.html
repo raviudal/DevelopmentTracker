@@ -9,6 +9,9 @@ Add / Edit Task
 		Add / Edit Task
 	</h1>
 {% endblock %}
+{% block navTitle %}
+Add / Edit Task
+{% endblock %}
 {% block content %}
 
 {% if form.errors %}
@@ -44,7 +47,7 @@ Add / Edit Task
 </div>
 
 <div class="col-xs-10" style="margin-bottom:5px">
-    <input style="width:350px" value="{% if form.name%} {{form.name.value}}{% endif%}" type="text" name="name" maxlength="500" id="id_name"/>
+    <input style="width:350px" value="{% if form.name.value != None%} {{form.name.value}}{% endif%}" type="text" name="name" maxlength="500" id="id_name"/>
 </div>
 
 <div class=" col-xs-2">
@@ -60,22 +63,22 @@ Add / Edit Task
     </select>
 </div>
 
-<div class=" col-xs-2">
-    <label class="col-sm-3" class="col-sm-3" for="id_project">Project:</label>
-</div>
-<div class="col-xs-10" style="margin-bottom:5px">
-    <select style="width:350px" name="project" required id="id_project">
-        {% for x,y in form.fields.project.choices %}
-        <option value="{{x}}"{% if form.project.value == x %} selected {% endif %}>{{y}}</option>
-        {% endfor %}
-    </select>
-</div>
+    <div class=" col-xs-2">
+        <label class="col-sm-3" class="col-sm-3" for="id_project">Project:</label>
+    </div>
+    <div class="col-xs-10" style="margin-bottom:5px">
+        <select style="width:350px" name="project" required id="id_project">
+            {% for x,y in form.fields.project.choices %}
+            <option value="{{x}}"{% if form.project.value == x %} selected {% endif %}>{{y}}</option>
+            {% endfor %}
+        </select>
+    </div>
 
 <div class=" col-xs-2">
     <label class="col-sm-3" class="col-sm-3" for="id_version">Version:</label>
 </div>
 <div class="col-xs-10" style="margin-bottom:5px">
-    <input style="width:350px" value="{% if form.version %} {{form.version.value}}{% endif%}" type="text" name="version" maxlength="5" id="id_version"/>
+    <input style="width:350px" value="{% if form.version.value != None %} {{form.version.value}}{% endif%}" type="text" name="version" maxlength="5" id="id_version"/>
 </div>
 
 <div class=" col-xs-2">
@@ -96,14 +99,14 @@ Add / Edit Task
     <label class="col-sm-3" class="col-sm-3" for="id_comment">Comment:</label>
 </div>
 <div class="col-xs-10" style="margin-bottom:5px">
-    <textarea style="width:350px" name="comment" cols="40" rows="10" id="id_comment">{% if form.comment%} {{form.comment.value}}{% endif%}
+    <textarea style="width:350px" name="comment" cols="40" rows="10" id="id_comment">{% if form.comment.value != None%} {{form.comment.value}}{% endif%}
     </textarea>
 </div>
 <div class=" col-xs-2">
     <label class="col-sm-3" class="col-sm-3" for="id_crnNumber">CrnNumber:</label>
 </div>
 <div class="col-xs-10" style="margin-bottom:5px"  >
-    <input style="width:350px" value="{% if form.crnNumber %} {{form.crnNumber.value}}{% endif%}" type="text" name="crnNumber" maxlength="100" id="id_crnNumber"/>
+    <input style="width:350px" value="{% if form.crnNumber.value != None %} {{form.crnNumber.value}}{% endif%}" type="text" name="crnNumber" maxlength="100" id="id_crnNumber"/>
 </div>
 
 <div class=" col-xs-2">
@@ -186,7 +189,7 @@ Add / Edit Task
 </div>
 
 <div class="col-xs-10" style="margin-bottom:5px">
-    <input style="width:350px" value="{% if form.estimatedHours%} {{form.estimatedHours.value}}{% endif%}" type="text" name="estimatedHours"  required id="id_estimatedHours"/>
+    <input style="width:350px" value="{% if form.estimatedHours.value != None%} {{form.estimatedHours.value}}{% endif%}" type="text" name="estimatedHours"  required id="id_estimatedHours"/>
 </div>
 <div class=" col-xs-2">
     <label   class="col-sm-3" for="id_priority">Priority:</label>
@@ -252,7 +255,7 @@ Add / Edit Task
     <label class="col-sm-3" for="id_releaseNote">ReleaseNote:</label>
 </div>
 <div class="col-xs-10" style="margin-bottom:5px">
-                <textarea style="width:350px" name="releaseNote" cols="40" rows="10" id="id_releaseNote">{% if form.releaseNote%} {{form.releaseNote.value}}{% endif%}
+                <textarea style="width:350px" name="releaseNote" cols="40" rows="10" id="id_releaseNote">{% if form.releaseNote.value != None%} {{form.releaseNote.value}}{% endif%}
                 </textarea>
 </div>
 

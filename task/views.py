@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from task import modelForm
-from .models import task,taskAllocate,taskStatus, upload
+from .models import task,taskAllocate,taskStatus, upload, connectionDetails
 from django.contrib import messages
 from django.views import generic
 from datetime import datetime, date
@@ -97,9 +97,22 @@ def addAssignedTask(request, pk=None):
     return render(request, 'task/addAssignedTask.html', context)
 
 @login_required
-def connectionDetails(request):
+def addConnectionDetails(request, pk=None):
     context = {}
-    return render(request, 'task/connectionDetails.html', context)
+    if request.method == 'POST' or pk != None:
+        if pk == None:
+            form = modelForm.connectionDetails(request.POST, request.FILES)
+        else:
+            myy = get_object_or_404(connectionDetails, pk=pk)
+            form = modelForm.connectionDetails(request.POST or None, instance=myy)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/task/connectionDetails')
+    else:
+        form = modelForm.connectionDetails()
+    context['form'] = form
+    return render(request, 'task/addConnectionDetails.html', context)
 @login_required
 def addtask(request, pk=None):
     for group in request.user.groups.all():
@@ -205,6 +218,15 @@ class AssignedTaskListView(LoginRequiredMixin, generic.ListView):
     queryset = taskAllocate.objects.all()
     template_name = 'task/assignedTask.html'
     paginate_by = 40
+
+
+class ConnectionDetailListView(LoginRequiredMixin, generic.ListView):
+    model = connectionDetails
+    context_object_name = 'connectionDetails_list'
+    queryset = connectionDetails.objects.all()
+    template_name = 'task/connectionDetails.html'
+    paginate_by = 40
+
 
 
 def upload(request):

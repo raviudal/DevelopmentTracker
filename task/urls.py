@@ -12,7 +12,10 @@ path('task/addAssignedTask', task_view.addAssignedTask, name='addAssignedTask'),
 path('task/addtask', task_view.addtask, name='addtask'),
 path('task/AssignTask', task_view.assignedTask, name='allocateTask'),
 
-path('task/connectionDetails', task_view.connectionDetails, name='connectionDetails'),
+path('task/connectionDetails', task_view.ConnectionDetailListView.as_view(), name='connectionDetails'),
+path('task/addConnectionDetails', task_view.addConnectionDetails, name='addConnectionDetails'),
+path('task/connectionDetails/<int:pk>', task_view.addConnectionDetails, name='connectionDetails'),
+
 path('task/<slug:pk>', task_view.addtask, name='task'),
 
 path('upload', task_view.upload, name='upload'),

@@ -125,20 +125,24 @@ class upload(models.Model):
 
 
 class connectionDetails(models.Model):
-    projectCode = models.ForeignKey('task', on_delete=models.SET_NULL, null=True)    # - - DTGD[PRJ]
-    application = models.CharField(max_length=15, choices=VPN_CHOICES)     # - - DTGD[APP - - QA / DEV / PRD]
+    projectCode = models.ForeignKey('project', on_delete=models.SET_NULL, null=True, blank=True)    # - - DTGD[PRJ]
+    application = models.CharField(max_length=15, choices=APPLICATION_CHOICES, null=True, blank=True)     # - - DTGD[APP - - QA / DEV / PRD]
     ip = models.CharField(max_length=15,null=True, blank=True)               # -  - VARCHAR[15]
     port = models.CharField(max_length=4,null=True, blank=True)             # - - VARCHAR[4]
-    userId = models.CharField(max_length=50,null=True, blank=True)           # - - VARCHAR[check
-    password = models.CharField(max_length=50,null=True, blank=True)         # - - VARCHAR[check
-    vpnApp = models.CharField(max_length=15, choices=APPLICATION_CHOICES)            # - - DTG[VPN - Forticlient, Sonicwall, Juniper, Windows
+    userIdAndPassword = models.TextField(max_length=500,null=True, blank=True)           # - - VARCHAR[check
+    # password = models.TextField(max_length=50,null=True, blank=True)         # - - VARCHAR[check
+    vpnApp = models.CharField(max_length=15, choices=VPN_CHOICES, null=True, blank=True)            # - - DTG[VPN - Forticlient, Sonicwall, Juniper, Windows
     vpnIp = models.CharField(max_length=15,null=True, blank=True)            # - - VARCHAR[15]
     vpnPort = models.CharField(max_length=6,null=True, blank=True)          # - - VARCHAR[6]
-    vpnUserId = models.CharField(max_length=50,null=True, blank=True)        # - - VARCHAR(50)
-    vpnPassword = models.CharField(max_length=50,null=True, blank=True)      # - - VARCHAR(50)
+    vpnUserIdPassword = models.TextField(max_length=500,null=True, blank=True)        # - - VARCHAR(50)
+    #vpnPassword = models.CharField(max_length=50,null=True, blank=True)      # - - VARCHAR(50)
     rdpIP = models.CharField(max_length=15,null=True, blank=True)            # - - VARCHAR(15)
-    rdpUserId1 = models.CharField(max_length=50,null=True, blank=True)       # - - VARCHAR(50)[Total
-    rdpPassword1 = models.CharField(max_length=50,null=True, blank=True)     # - - VARCHAR(50)
+    rdpUserIdAndPassword = models.TextField(max_length=500,null=True, blank=True)       # - - VARCHAR(50)[Total
+    #rdpPassword1 = models.TextField(max_length=50,null=True, blank=True)     # - - VARCHAR(50)
     workspace = models.CharField(max_length=250,null=True, blank=True)        # - - VARCHAR(250)[Workspace
-    software = models.FileField(upload_to='docs/')
-    comment = models.TextField(null=True, blank=True)
+    #software = models.FileField(upload_to='docs/')
+    comment = models.TextField(max_length=200,null=True, blank=True)
+
+    def return_abs_url(self):
+        return reverse('connectionDetails', args=[str(self.id)])
+

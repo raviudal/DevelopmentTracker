@@ -1,12 +1,100 @@
 {% extends "task/base.html" %}
 {% block title%}
-		Connection Details
+Connection Details
 {% endblock %}
 {% block pageHeader %}
-	<h1>
-		Connection Details
-	</h1>
+<h1>
+    Connection Details
+</h1>
+{% endblock %}
+{% block navTitle %}
+Connection Details
 {% endblock %}
 {% block content %}
+
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info">
+    <button class="close" data-dismiss="alert">
+        <i class="ace-icon fa fa-times"></i>
+    </button>
+    <i class="ace-icon fa fa-check"></i>  {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+<br>
+
+
+
+
+
+
+<div style="float:right">
+    <div class="btn btn-white btn-sm btn-primary"><i class="ace-icon fa glyphicon-plus"></i><a href="{%url 'addConnectionDetails'%}">Add New Connection Detail</a> </div>
+</div>
+
+<div>
+
+    {% if is_paginated %}
+    <div class="btn-group">
+        {% if page_obj.has_previous %}
+        <div class="btn btn-white btn-sm btn-primary"><i class="ace-icon fa fa-arrow-left "></i><a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous</a> </div>
+        {% endif %}
+        <div class="btn btn-white btn-sm btn-primary">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</div>
+        {% if page_obj.has_next %}
+        <div class="btn btn-white btn-sm btn-primary"><a href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a> <i class="ace-icon fa fa-arrow-right "></i> </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+
+</div>
+<div>
+
+    <table id="simple-table" class="table  table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Project</th> <!--coll-no-1-->
+            <th>Application</th> <!--coll-no-2-->
+
+
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for connectionDetails in connectionDetails_list %}
+<div hidden>{{connectionDetails.id}}</div>
+        <tr>
+
+
+            <td>{{connectionDetails.projectCode}}</td><!--coll-no-1-->
+            <td>{{connectionDetails.application}}</td><!--coll-no-2-->
+
+            <td><!--coll-no-8-->
+                <a href="{{connectionDetails.return_abs_url}}"><!--connectionDetails.return_abs_url}}-->
+                    <div class="hidden-sm hidden-xs btn-group">
+
+                        <button class="btn btn-xs btn-info">
+                            <i class="ace-icon fa fa-pencil bigger-120"></i>
+                        </button>
+
+
+                    </div>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+
+
+        </tbody>
+    </table>
+
+</div>
+
+
+
+
+
 {% endblock %}
 
