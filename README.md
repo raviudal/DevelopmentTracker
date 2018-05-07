@@ -8,6 +8,7 @@ To setup this project in your local you need to install the following dependency
 <li>dateutil</li>
 </ul>
 
-After installing the above dependenies just run the following command in the project dir
-<br>
+After installing the above dependenies just run the following command in the project directory.
+<br><br>
 python3 manage.py runserver
+
