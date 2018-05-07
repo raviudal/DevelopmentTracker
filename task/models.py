@@ -103,7 +103,7 @@ class task(models.Model):
 
 class taskAllocate(models.Model):
     code = models.ForeignKey('task', on_delete=models.SET_NULL, null=True)
-    assignedBy = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='%(class)s_assignedBy')
+    assignedBy = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='%(class)s_assignedBy')
     assignedTo = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     assignedOn = models.DateField(null=True, blank=True)
     startedOn = models.DateField(null=True, blank=True)

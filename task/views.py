@@ -70,23 +70,27 @@ def addAssignedTask(request, pk=None):
             myy = get_object_or_404(taskAllocate, pk=pk)
             form = modelForm.addAllocateTask(request.POST or None, instance=myy)
             print(pk, "++  inside the function and pk is Nott None")
-
+            print(pk, "++++++++++++++++++++++++++++++++++++++++++++")
+            print(form)
+            print("+++++++++++++++++++++++++++++++++++++++++++++")
+        print(form)
         if form.is_valid():
             # process the data in form.cleaned_data as required (here we just write it to the model due_back field)
+            print('form is validated')
             if pk != None:
                 update_status = task.objects.get(pk=form.cleaned_data['code'].code)
                 update_status.status = taskStatus.objects.get(pk=form.cleaned_data['status'].code)
                 update_status.save()
-                form.save()
-
+                obj = form.save(commit=False)
+                #obj.assignedBy = request.user
+                obj.save()
+                print(request.user, '++if part++form is saved')
                 # print('+++form.code ', form.cleaned_data['code'].status.code, '++ form.status', form.cleaned_data['status'].code)
             else:
-                form.save(commit=False)
-                # form.status = form.cleaned_data['code'].status.code
-                #print('++++++taskStatus.objects.get(pk=form.cleaned_data[].status.code)',taskStatus.objects.get(pk=form.cleaned_data['code'].status.code))
-                #form.status = taskStatus.objects.get(pk=form.cleaned_data['code'].status.code)
-                form.save()
-                print('++++form is saved')
+                obj = form.save(commit=False)
+                obj.assignedBy = request.user
+                obj.save()
+                print(request.user,'++else part++form is saved')
             messages.success(request, 'Form submission successful now go back to Assingedtask')
             return HttpResponseRedirect(reverse('assignedTask'))
 
@@ -113,6 +117,8 @@ def addConnectionDetails(request, pk=None):
         form = modelForm.connectionDetails()
     context['form'] = form
     return render(request, 'task/addConnectionDetails.html', context)
+
+
 @login_required
 def addtask(request, pk=None):
     for group in request.user.groups.all():

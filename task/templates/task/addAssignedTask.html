@@ -7,10 +7,23 @@
 		Allocate Task
 	</h1>
 {% endblock %}
-{% block navTitle %}
-Allocate Task - Add
-{% endblock %}
 {% block content %}
+
+
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
 
 
 <form action="" method="post">
@@ -20,10 +33,19 @@ Allocate Task - Add
         <label class="col-sm-3" for="id_code">Code:</label>
     </div>
     <div class="col-xs-10" style="margin-bottom:5px">
-        <select class="form-control" style="width:350px" name="code" required="" id="id_code" {% if is_engineer %} disabled {%endif%}>
+        <select class="form-control" style="width:350px" name="code" required="" id="id_code" {% if is_engineer %} readonly="true"  {% endif%}>
+            {% if is_engineer %}
+            {% for x,y in form.fields.code.choices %}
+            {% if form.code.value == x %}
+            <option value="{{x}}" selected="" >{{y}}</option>
+            {% endif %}
+            {% endfor %}
+            {% else%}
             {% for x,y in form.fields.code.choices %}
             <option value="{{x}}" {% if form.code.value == x %}selected="" {% endif %}>{{y}}</option>
             {% endfor %}
+            {% endif %}
+
         </select>
     </div>
 
@@ -31,9 +53,9 @@ Allocate Task - Add
         <label class="col-sm-3" for="id_assignedBy">AssignedBy:</label>
     </div>
     <div class="col-xs-10" style="margin-bottom:5px" hidden>
-        <select class="form-control" style="width:350px" name="assignedBy" required="" id="id_assignedBy" {% if is_engineer %} disabled {%endif%}>
+        <select class="form-control" style="width:350px" name="assignedBy" id="id_assignedBy">
             {% for x,y in form.fields.assignedBy.choices %}
-            <option value="{{x}}" {% if y == user.get_username %} selected="" {% endif %} >{{y}}</option>
+            <option value="{{x}}" {% if x == form.assignedBy.value %} selected="" {% endif %} >{{y}}</option>
             {% endfor %}
         </select>
     </div>
@@ -42,10 +64,18 @@ Allocate Task - Add
         <label class="col-sm-3" for="id_assignedTo">AssignedTo:</label>
     </div>
     <div class="col-xs-10" style="margin-bottom:5px">
-        <select class="form-control" style="width:350px" name="assignedTo" required="" id="id_assignedTo" {% if is_engineer %} disabled {%endif%}>
+        <select class="form-control" style="width:350px" name="assignedTo" required="" id="id_assignedTo" {% if is_engineer %} readonly="true"  {% endif%}>
+            {% if is_engineer %}
+            {% for x,y in form.fields.assignedTo.choices %}
+            {% if form.assignedTo.value == x %}
+            <option value="{{x}}" selected="" >{{y}}</option>
+            {% endif %}
+            {% endfor %}
+            {% else%}
             {% for x,y in form.fields.assignedTo.choices %}
             <option value="{{x}}" {% if form.assignedTo.value == x %}selected="" {% endif %}>{{y}}</option>
             {% endfor %}
+            {% endif %}
         </select>
     </div>
 
@@ -55,7 +85,7 @@ Allocate Task - Add
     <div class="col-xs-10" style="margin-bottom:5px">
         <div class="input-group" style="width:350px">
             <input class="form-control date-picker  col-sm-5" value="{% if form.assignedOn.value != None %} {{form.assignedOn.value|date:"o-m-d"}} {% endif %}" name="assignedOn" value="" id="id_assignedOn"
-                   data-date-format="yyyy-mm-dd" type="text" {% if is_engineer %} disabled {%endif%}>
+                   data-date-format="yyyy-mm-dd" type="text" >
             <span class="input-group-addon">
 		<i class="fa fa-calendar bigger-110"></i>
 	</span>
@@ -68,7 +98,7 @@ Allocate Task - Add
     <div class="col-xs-10" style="margin-bottom:5px">
         <div class="input-group" style="width:350px">
             <input class="form-control date-picker  col-sm-5"  name="startedOn" value="{% if form.startedOn.value != None %} {{form.startedOn.value|date:"o-m-d"}} {% endif %}" id="id_startedOn"
-                   data-date-format="yyyy-mm-dd" type="text" {% if is_engineer %} disabled {%endif%}>
+                   data-date-format="yyyy-mm-dd" type="text">
             <span class="input-group-addon">
 		<i class="fa fa-calendar bigger-110"></i>
 	</span>
